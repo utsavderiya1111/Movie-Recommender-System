@@ -14,15 +14,28 @@ def recommend(movie):
         recommended_movies.append(movies.iloc[i[0]].title)
     return recommended_movies
 # ✅ Check if file exists
-zip_path = "movies-recommender-system/similarity.zip"   # adjust path if needed
+# Paths for files inside folder
+BASE_DIR = "movies-recommender-system"
+zip_path = os.path.join(BASE_DIR, "similarity.zip")
+movie_dict_path = os.path.join(BASE_DIR, "movie_dict.pkl")
+
+# ✅ Check similarity.zip
 if os.path.exists(zip_path):
     with zipfile.ZipFile(zip_path, "r") as zip_ref:
         with zip_ref.open("similarity.pkl") as f:
             similarity = pickle.load(f)
 else:
     st.error(f"File not found: {zip_path}")
-    st.stop()  # stop app if file missing
-movies_dict = pickle.load(open('movie_dict.pkl', 'rb'))
+    st.stop()
+
+# ✅ Check movie_dict.pkl
+if os.path.exists(movie_dict_path):
+    with open(movie_dict_path, "rb") as f:
+        movies_dict = pickle.load(f)
+else:
+    st.error(f"File not found: {movie_dict_path}")
+    st.stop()
+
 movies = pd.DataFrame(movies_dict)
 
 st.title('Movie Recommender System')
