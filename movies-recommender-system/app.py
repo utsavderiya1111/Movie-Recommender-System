@@ -20,10 +20,19 @@ def recommend(movie):
 # Paths for files inside folder
 
 # ✅ Check similarity.zip
-if os.path.exists(zip_path):
-    with zipfile.ZipFile(zip_path, "r") as zip_ref:
-        with zip_ref.open("similarity.pkl") as f:
-            similarity = pickle.load(f)
+if os.path.exists(movie_dict_path):
+    st.write("movie_dict.pkl size:", os.path.getsize(movie_dict_path))
+
+    with open(movie_dict_path, "rb") as f:
+        header = f.read(20)  # read first 20 bytes
+        st.write("First 20 bytes of movie_dict.pkl:", header)
+        f.seek(0)  # reset file pointer
+        try:
+            movies_dict = pickle.load(f)
+        except Exception as e:
+            st.error(f"Unpickling failed: {e}")
+            st.stop()
+
 else:
     st.error(f"File not found: {zip_path}")
     st.stop()
