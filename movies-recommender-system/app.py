@@ -4,7 +4,7 @@ import pandas as pd
 import zipfile
 import os
 
-
+st.write("Files in current directory:", os.listdir("."))
 def recommend(movie):
     movie_index = movies[movies['title'] == movie].index[0]
     distances = similarity[movie_index]
