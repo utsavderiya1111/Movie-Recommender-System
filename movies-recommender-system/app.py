@@ -4,7 +4,10 @@ import pandas as pd
 import zipfile
 import os
 
-st.write("Files in current directory:", os.listdir("."))
+BASE_DIR = "movies-recommender-system"
+zip_path = os.path.join(BASE_DIR, "similarity.zip")
+movie_dict_path = os.path.join(BASE_DIR, "movie_dict.pkl")
+st.write("Files in movies-recommender-system folder:", os.listdir(BASE_DIR))
 def recommend(movie):
     movie_index = movies[movies['title'] == movie].index[0]
     distances = similarity[movie_index]
@@ -15,9 +18,6 @@ def recommend(movie):
     return recommended_movies
 # ✅ Check if file exists
 # Paths for files inside folder
-BASE_DIR = "movies-recommender-system"
-zip_path = os.path.join(BASE_DIR, "similarity.zip")
-movie_dict_path = os.path.join(BASE_DIR, "movie_dict.pkl")
 
 # ✅ Check similarity.zip
 if os.path.exists(zip_path):
